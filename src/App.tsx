@@ -1,9 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import AnimatedList from './components/AnimatedList'
 import Antigravity from './components/Antigravity'
 import ElectricBorder from './components/ElectricBorder'
 import Prism from './components/Prism'
+import GlassIcons from './components/GlassIcons'
+import Folder from './components/Folder'
+import { FiBarChart2, FiBook, FiCloud, FiEdit, FiFileText, FiHeart } from 'react-icons/fi'
+import FloatingLines from './components/FloatingLines'
+import dragon1 from './assets/img/dragon1.png'
+import dragon2 from './assets/img/dragon2.png'
+import dragon3 from './assets/img/dragon3.png'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -22,7 +29,7 @@ function App() {
       'test',
       'surprise me',
       'Prism test',
-      'Item 4',
+      'Desktop',
       'Item 5',
       'Item 6',
       'Item 7',
@@ -38,14 +45,7 @@ function App() {
     []
   )
 
-  const sectionRefs = useRef<(HTMLElement | null)[]>([])
-
-  const scrollToSection = (index: number) => {
-    const target = sectionRefs.current[index]
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
+  const [activeView, setActiveView] = useState<'field' | 'prism' | 'desktop'>('field')
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -97,7 +97,11 @@ function App() {
                   return
                 }
                 if (index === 2) {
-                  scrollToSection(3)
+                  setActiveView('prism')
+                  return
+                }
+                if (index === 3) {
+                  setActiveView('desktop')
                   return
                 }
                 console.log(item, index)
@@ -111,9 +115,21 @@ function App() {
       </aside>
 
       <main className="content">
-        <div className="sections">
-          <section className="section" ref={el => { sectionRefs.current[0] = el }}>
-            <div className="effect-layer">
+        <div className="workspace">
+          {activeView === 'desktop' ? (
+            <div className="workspace-bg">
+              <FloatingLines
+                enabledWaves={['top', 'middle', 'bottom']}
+                lineCount={5}
+                lineDistance={5}
+                bendRadius={5}
+                bendStrength={-0.5}
+                interactive
+                parallax
+              />
+            </div>
+          ) : (
+            <div className="workspace-bg">
               <Antigravity
                 count={1000}
                 magnetRadius={5}
@@ -132,28 +148,59 @@ function App() {
                 fieldStrength={10}
               />
             </div>
-          </section>
-          <section className="section" ref={el => { sectionRefs.current[1] = el }}>
-            <div className="effect-layer effect-quiet"></div>
-          </section>
-          <section className="section" ref={el => { sectionRefs.current[2] = el }}>
-            <div className="effect-layer effect-quiet"></div>
-          </section>
-          <section className="section" ref={el => { sectionRefs.current[3] = el }}>
-            <div className="effect-layer">
-              <Prism
-                animationType="rotate"
-                timeScale={0.5}
-                height={3.5}
-                baseWidth={5.5}
-                scale={3.6}
-                hueShift={0}
-                colorFrequency={1}
-                noise={0}
-                glow={1}
-              />
-            </div>
-          </section>
+          )}
+
+          <div className="workspace-content">
+            {activeView === 'prism' && (
+              <div className="panel panel-full">
+                <Prism
+                  animationType="rotate"
+                  timeScale={0.5}
+                  height={3.5}
+                  baseWidth={5.5}
+                  scale={3.6}
+                  hueShift={0}
+                  colorFrequency={1}
+                  noise={0}
+                  glow={1}
+                />
+              </div>
+            )}
+
+            {activeView === 'desktop' && (
+              <div className="desktop-view">
+                <div className="desktop-grid">
+                  <div className="panel desktop-panel folder-panel">
+                  <div className="panel-title">Project Folder</div>
+                  <div className="folder-wrap">
+                      <Folder
+                        color="#5227FF"
+                        size={2}
+                        items={[
+                          <img key="dragon1" src={dragon1} alt="Dragon scene 1" className="folder-item" />,
+                          <img key="dragon2" src={dragon2} alt="Dragon scene 2" className="folder-item" />,
+                          <img key="dragon3" src={dragon3} alt="Dragon scene 3" className="folder-item" />
+                        ]}
+                      />
+                  </div>
+                </div>
+                  <div className="panel desktop-panel quick-panel">
+                    <div className="panel-title">Quick Launch</div>
+                    <GlassIcons
+                      items={[
+                        { icon: <FiFileText />, color: 'blue', label: 'Files' },
+                        { icon: <FiBook />, color: 'purple', label: 'Books' },
+                        { icon: <FiHeart />, color: 'red', label: 'Health' },
+                        { icon: <FiCloud />, color: 'indigo', label: 'Weather' },
+                        { icon: <FiEdit />, color: 'orange', label: 'Notes' },
+                        { icon: <FiBarChart2 />, color: 'green', label: 'Stats' }
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     </div>
