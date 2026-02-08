@@ -21,7 +21,7 @@ function App() {
     () => [
       'test',
       'surprise me',
-      'Item 3',
+      'Prism test',
       'Item 4',
       'Item 5',
       'Item 6',
@@ -96,7 +96,7 @@ function App() {
                   window.history.replaceState({}, '', nextUrl)
                   return
                 }
-                if (index === 3) {
+                if (index === 2) {
                   scrollToSection(3)
                   return
                 }
