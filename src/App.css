@@ -1,0 +1,101 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+  background: radial-gradient(circle at 10% 10%, #2a0f17 0%, #0b0b12 45%, #07070c 100%);
+  color: #f7f0f0;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, #0d0b13 0%, #0a0a10 100%);
+  transition: width 0.25s ease;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.sidebar.open {
+  width: 360px;
+}
+
+.sidebar.closed {
+  width: 28px;
+}
+
+.sidebar-rail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(180deg, rgba(255, 41, 41, 0.2), rgba(7, 7, 12, 0));
+}
+
+.sidebar-rail span {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-inner {
+  padding: 32px 24px 24px 48px;
+}
+
+.content {
+  position: relative;
+  min-height: 100vh;
+}
+
+.effects {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.effect-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.effect-layer canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.sidebar-border {
+  border-radius: 18px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .sidebar.closed {
+    width: 100%;
+    height: 48px;
+  }
+
+  .sidebar-rail {
+    writing-mode: horizontal-tb;
+    width: 100%;
+    height: 48px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .sidebar-rail span {
+    transform: none;
+  }
+}
