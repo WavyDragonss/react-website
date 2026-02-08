@@ -150,7 +150,7 @@ function App() {
             </div>
           )}
 
-          <div className="workspace-content">
+          <div className={`workspace-content ${activeView === 'field' ? 'is-field' : ''}`}>
             {activeView === 'prism' && (
               <div className="panel panel-full">
                 <Prism
