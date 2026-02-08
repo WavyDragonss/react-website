@@ -38,7 +38,7 @@ function App() {
     []
   )
 
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+  const sectionRefs = useRef<(HTMLElement | null)[]>([])
 
   const scrollToSection = (index: number) => {
     const target = sectionRefs.current[index]
@@ -112,7 +112,7 @@ function App() {
 
       <main className="content">
         <div className="sections">
-          <section className="section" ref={el => (sectionRefs.current[0] = el)}>
+          <section className="section" ref={el => { sectionRefs.current[0] = el }}>
             <div className="effect-layer">
               <Antigravity
                 count={1000}
@@ -133,13 +133,13 @@ function App() {
               />
             </div>
           </section>
-          <section className="section" ref={el => (sectionRefs.current[1] = el)}>
+          <section className="section" ref={el => { sectionRefs.current[1] = el }}>
             <div className="effect-layer effect-quiet"></div>
           </section>
-          <section className="section" ref={el => (sectionRefs.current[2] = el)}>
+          <section className="section" ref={el => { sectionRefs.current[2] = el }}>
             <div className="effect-layer effect-quiet"></div>
           </section>
-          <section className="section" ref={el => (sectionRefs.current[3] = el)}>
+          <section className="section" ref={el => { sectionRefs.current[3] = el }}>
             <div className="effect-layer">
               <Prism
                 animationType="rotate"
