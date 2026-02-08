@@ -56,15 +56,13 @@
   min-height: 100vh;
 }
 
-.effects {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
 .effect-layer {
   position: absolute;
   inset: 0;
+}
+
+.effect-quiet {
+  background: radial-gradient(circle at 60% 40%, rgba(255, 41, 41, 0.08), transparent 60%);
 }
 
 .effect-layer canvas {
@@ -75,6 +73,18 @@
 
 .sidebar-border {
   border-radius: 18px;
+}
+
+.sections {
+  position: relative;
+  z-index: 0;
+}
+
+.section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 900px) {

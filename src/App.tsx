@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import AnimatedList from './components/AnimatedList'
 import Antigravity from './components/Antigravity'
 import ElectricBorder from './components/ElectricBorder'
+import Prism from './components/Prism'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -36,6 +37,15 @@ function App() {
     ],
     []
   )
+
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  const scrollToSection = (index: number) => {
+    const target = sectionRefs.current[index]
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -86,6 +96,10 @@ function App() {
                   window.history.replaceState({}, '', nextUrl)
                   return
                 }
+                if (index === 3) {
+                  scrollToSection(3)
+                  return
+                }
                 console.log(item, index)
               }}
               showGradients
@@ -97,26 +111,49 @@ function App() {
       </aside>
 
       <main className="content">
-        <div className="effects">
-          <div className="effect-layer">
-            <Antigravity
-              count={1000}
-              magnetRadius={5}
-              ringRadius={5}
-              waveSpeed={0.1}
-              waveAmplitude={1}
-              particleSize={1.5}
-              lerpSpeed={0.05}
-              color={effectColor}
-              autoAnimate
-              particleVariance={1}
-              rotationSpeed={0}
-              depthFactor={1}
-              pulseSpeed={3}
-              particleShape="capsule"
-              fieldStrength={10}
-            />
-          </div>
+        <div className="sections">
+          <section className="section" ref={el => (sectionRefs.current[0] = el)}>
+            <div className="effect-layer">
+              <Antigravity
+                count={1000}
+                magnetRadius={5}
+                ringRadius={5}
+                waveSpeed={0.1}
+                waveAmplitude={1}
+                particleSize={1.5}
+                lerpSpeed={0.05}
+                color={effectColor}
+                autoAnimate
+                particleVariance={1}
+                rotationSpeed={0}
+                depthFactor={1}
+                pulseSpeed={3}
+                particleShape="capsule"
+                fieldStrength={10}
+              />
+            </div>
+          </section>
+          <section className="section" ref={el => (sectionRefs.current[1] = el)}>
+            <div className="effect-layer effect-quiet"></div>
+          </section>
+          <section className="section" ref={el => (sectionRefs.current[2] = el)}>
+            <div className="effect-layer effect-quiet"></div>
+          </section>
+          <section className="section" ref={el => (sectionRefs.current[3] = el)}>
+            <div className="effect-layer">
+              <Prism
+                animationType="rotate"
+                timeScale={0.5}
+                height={3.5}
+                baseWidth={5.5}
+                scale={3.6}
+                hueShift={0}
+                colorFrequency={1}
+                noise={0}
+                glow={1}
+              />
+            </div>
+          </section>
         </div>
       </main>
     </div>
